@@ -3,22 +3,21 @@ from google import genai
 import PyPDF2
 import io
 
-# Sayfa yapılandırması - Profesyonel görünüm
+# Sayfa yapılandırması
 st.set_page_config(page_title="AI Smart Tutor", page_icon="🤖", layout="centered")
 st.title("🚀 Ultimate AI Study Assistant")
 st.markdown("---")
 
 # API Setup
-# Success! yazısını aldığın anahtarı buraya yaz
-client = genai.Client(api_key="YOUR_API_KEY_HERE")
+client = genai.Client(api_key=st.secrets["API_KEY"])
 
-# Sohbet hafızasını başlat
+# Sohbet hafızası
 if "messages" not in st.session_state:
     st.session_state.messages = []
 if "full_context" not in st.session_state:
     st.session_state.full_context = ""
 
-# Yan Panel - Dosya Yönetimi
+# Yan Panel
 with st.sidebar:
     st.header("📂 Document Center")
     uploaded_files = st.file_uploader("Upload your PDF notes", type="pdf", accept_multiple_files=True)
@@ -53,7 +52,6 @@ if prompt := st.chat_input("Ask about your notes..."):
     with st.chat_message("assistant"):
         if st.session_state.full_context:
             with st.spinner("Thinking..."):
-                # Mühendislik notu: Sisteme rol ve bağlam (context) veriyoruz
                 full_prompt = f"Context from notes: {st.session_state.full_context}\n\nUser Question: {prompt}"
                 
                 response = client.models.generate_content(
@@ -66,4 +64,5 @@ if prompt := st.chat_input("Ask about your notes..."):
                 # Yanıtı hafızaya ekle
                 st.session_state.messages.append({"role": "assistant", "content": ai_response})
         else:
+
             st.warning("Please upload and process your notes from the sidebar first.")
