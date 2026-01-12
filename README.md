@@ -1,3 +1,4 @@
+![AI Asistan Ekran Görüntüsü](aI_study_assistant.png)
 # 🎓 AI Academic Assistant: Dynamic PDF Analyzer
 
 A professional RAG (Retrieval-Augmented Generation) tool built with **Gemini 2.5 Flash** to analyze academic documents.
